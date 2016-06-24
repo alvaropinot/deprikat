@@ -1,0 +1,30 @@
+{
+  "name": "deprikat",
+  "version": "0.0.1",
+  "description": "deprecation tags analyser with usage lookup",
+  "keywords": [
+    "deprecation",
+    "esprima",
+    "ast",
+    "depercator",
+    "deprecated",
+    "tag",
+    "analyser"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "tape tests/**/*.test.js",
+    "watch": "nodemon -q -x 'npm test' | tap-spec"
+  },
+  "author": "Alvaro Pinot",
+  "license": "MIT",
+  "dependencies": {
+    "esprima": "^2.7.2",
+    "esprima-walk": "^0.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.2",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0"
+  }
+}
