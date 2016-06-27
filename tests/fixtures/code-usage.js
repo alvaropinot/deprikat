@@ -8,6 +8,3 @@ something();
 function foo() {
   return getValue();
 }
-
-
-ko();
