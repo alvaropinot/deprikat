@@ -13,8 +13,9 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "tape tests/**/*.test.js",
-    "watch": "nodemon -q -x 'npm test' | tap-spec"
+    "testold": "tape tests/**/*.test.js",
+    "test": "istanbul cover tests/index.js | tap-spec",
+    "watch": "nodemon -q -x 'npm test'"
   },
   "author": "Alvaro Pinot",
   "license": "MIT",
@@ -23,6 +24,7 @@
     "esprima-walk": "^0.1.0"
   },
   "devDependencies": {
+    "istanbul": "^0.4.4",
     "nodemon": "^1.9.2",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.0"

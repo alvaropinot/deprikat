@@ -7,17 +7,26 @@ function getValue() {
 }
 
 /**
+ * @deprecated
+ */
+function ko() {
+  // this is a comment
+  return 'ko';
+}
+
+
+/**
  * @return {String} foo
  */
 function ok() {
   // this is a comment
-  getValue();
+  // getValue();
   return 'foo';
 }
 
-ok();
-getValue();
-
-var something = getValue;
-
-something()
+// ok();
+// getValue();
+//
+// var something = getValue;
+//
+// something()

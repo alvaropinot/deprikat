@@ -1,10 +1,14 @@
 const test = require('tape');
 
 const deprikat = require('../');
+const reporter = require('../report');
 
 const basicTest = (text, fileName, config) => {
-  test(text, function (t) {
-    const report = deprikat.analyze(fileName, config);
+  test(text, t => {
+    const deprecations = deprikat.analyze(fileName, config);
+    const report = reporter.report(
+      fileName, deprecations.deprecatedFunctionsNames, config
+    );
 
     t.deepEqual(report.deprecatedFunctionsNames, ['getValue'],
       'getValue should be deprecated'
@@ -17,7 +21,7 @@ const basicTest = (text, fileName, config) => {
       report.warnings[0].location,
       {
         line: 14,
-        column: 12
+        column: 2
       },
       'the error should be at a location with line and column'
     );
@@ -45,13 +49,60 @@ basicTest(
   }
 );
 
-test('should detect no deprecated functions', function (t) {
+test('should detect no deprecated functions', t => {
   const fileName = './tests/fixtures/code-no-deprecations.js';
-  const report = deprikat.analyze(fileName);
+  const deprecations = deprikat.analyze(fileName);
+  const report = reporter.report(
+    fileName, deprecations.deprecatedFunctionsNames
+  );
 
   t.deepEqual(report.deprecatedFunctionsNames, [],
     'there should be no deprecated functions'
   );
   t.equal(report.warnings.length, 0, 'there should be no warnings');
+  t.end();
+});
+
+
+
+test('foo', t => {
+  const deprecations = deprikat.analyze(
+    './tests/fixtures/code-definition.js'
+  );
+  const report = reporter.report(
+    './tests/fixtures/code-usage.js',
+    deprecations.deprecatedFunctionsNames
+  );
+
+  t.ok(
+    report.deprecatedFunctionsNames.includes('getValue'),
+    'getValue should be deprecated'
+  );
+  t.equal(report.warnings.length, 2, 'there should be two warnings');
+  t.equal(report.warnings[0].name, 'getValue',
+    'errors must have a function name'
+  );
+  t.deepEqual(
+    report.warnings[0].location,
+    {
+      line: 2,
+      column: 0
+    },
+    'the error should be at a location with line and column'
+  );
+  t.deepEqual(
+    report.warnings[1].location,
+    {
+      line: 9,
+      column: 9
+    },
+    'the error should be at a location with line and column'
+  );
+  t.ok(report.warnings[0].location.line <= report.warnings[1].location.line,
+    'the errors must be in line order'
+  );
+  t.equal(report.file, './tests/fixtures/code-usage.js',
+    'errors must be reported within a file'
+  );
   t.end();
 });
