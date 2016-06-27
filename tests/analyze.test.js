@@ -1,6 +1,6 @@
 const test = require('tape');
 
-const deprikat = require('../');
+const deprikat = require('../lib/analyze');
 
 const basicTest = (text, fileName, config) => {
   test(text, t => {

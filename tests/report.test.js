@@ -1,7 +1,7 @@
 const test = require('tape');
 
-const deprikat = require('../');
-const reporter = require('../report');
+const deprikat = require('../lib/analyze');
+const reporter = require('../lib/report');
 
 const basicTest = (text, fileName, config) => {
   test(text, t => {
