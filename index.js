@@ -31,14 +31,6 @@ const _getDepecratedFunctions = (functionDeclarations, deprecratedComments) =>
     _getRelatedComment(declaration.loc.start.line, deprecratedComments).length === 1
   );
 
-const _getFunctionCalls = (ast) => {
-  const functionCalls = [];
-  walk(ast, (node) =>
-    node.type === TYPES.CALL_EXPRESSION && functionCalls.push(node)
-  );
-  return functionCalls;
-}
-
 const analyze = (file, opts = {}) => {
   const defaults = {
     encoding: 'utf-8',
@@ -58,42 +50,21 @@ const analyze = (file, opts = {}) => {
   };
 
   const ast = esprima.parse(data, esprimaOpts);
-  // log(ast);
+
   const _functionDeclarations = _getFunctionDeclarations(ast.body);
-  // log(_functionDeclarations)
+
   const _deprecratedComments = _getDepecratedComments(
     ast.comments, config.deprecatedTag
   );
-  // log(ast.comments)
-  // log(_deprecratedComments)
+
   const _depecratedFunctions = _getDepecratedFunctions(
     _functionDeclarations, _deprecratedComments
   );
   const deprecatedFunctionsNames = _depecratedFunctions.map((f) => f.id.name);
-  // log(depecratedFunctions[0].id.name);
-  // function filterCallExpressions(elements){
-  //   return elements.filter(e => e.type === TYPES.CALL_EXPRESSION);
-  // }
   log(deprecatedFunctionsNames)
-  // log(ast.body.filter(e => e.body.body));
-  const _functionCalls = _getFunctionCalls(ast);
-  // log(_functionCalls);
-  const warnings = _functionCalls
-    .map((fn) => (
-      {
-        location: fn.loc.end,
-        name: fn.callee.name
-      })
-    )
-    .filter(fn => deprecatedFunctionsNames.includes(fn.name))
-    // sort warnings by line position
-    .sort((a, b) => a.location.line - b.location.line);
-
-  log(warnings);
 
   return {
     deprecatedFunctionsNames,
-    warnings,
     file
   };
 }
