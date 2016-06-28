@@ -1,6 +1,15 @@
 module.exports = {
     "extends": "google",
-
+    "ecmaFeatures": {
+      "modules": true,
+    },
+    "env":{
+      "amd": true,
+      "browser": true,
+      "es6": true,
+      "jquery": true,
+      "node": true,
+    },
     "rules": {
       "no-unused-expressions": [
         2,
