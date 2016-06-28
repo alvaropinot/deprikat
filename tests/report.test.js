@@ -63,9 +63,7 @@ test('should detect no deprecated functions', t => {
   t.end();
 });
 
-
-
-test('foo', t => {
+test('should be able to relate multiple files', t => {
   const deprecations = deprikat.analyze(
     './tests/fixtures/code-definition.js'
   );
