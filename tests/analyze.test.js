@@ -1,10 +1,10 @@
 const test = require('tape');
 
-const deprikat = require('../lib/analyze');
+const analyze = require('../lib/analyze');
 
 const basicTest = (text, fileName, config) => {
   test(text, t => {
-    const report = deprikat.analyze(fileName, config);
+    const report = analyze(fileName, config);
 
     t.deepEqual(report.deprecatedFunctionsNames, ['getValue'],
       'getValue should be deprecated'
@@ -32,7 +32,7 @@ basicTest(
 
 test('should detect no deprecated functions', t => {
   const fileName = './tests/fixtures/code-no-deprecations.js';
-  const report = deprikat.analyze(fileName);
+  const report = analyze(fileName);
 
   t.deepEqual(report.deprecatedFunctionsNames, [],
     'there should be no deprecated functions'
