@@ -19,17 +19,19 @@ function scan(path){
 	let stats = fs.statSync(path);
 
 	if (stats.isFile()) {
+		console.log('Analyzing file: ' + path);
 		scanFile(path);
 	}
 	else if (stats.isDirectory()){
+		console.log('=== ' + path + ' >>>');
 	 	let files = fs.readdirSync(path);
 
 		if (files.length) {
 			files.forEach(function (file){
 				let filename = path + '/' + file;
-				console.log('Analyzing file:' + filename);
 				scan(filename);
 			});
+			console.log('<<< ' + path + ' ===');
 		}
 	}
 }
@@ -37,10 +39,3 @@ function scan(path){
 
 let fileName = args[2];
 scan(fileName);
-
-
-
-
-
-
-
