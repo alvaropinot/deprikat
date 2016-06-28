@@ -14,7 +14,7 @@ const basicTest = (text, fileName, config) => {
     );
     t.end();
   });
-}
+};
 
 basicTest(
   'should return depecrated function names and have a default config',
