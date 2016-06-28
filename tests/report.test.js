@@ -1,12 +1,12 @@
 const test = require('tape');
 
-const deprikat = require('../');
-const reporter = require('../report');
+const analyze = require('../lib/analyze');
+const reporter = require('../lib/reporter');
 
 const basicTest = (text, fileName, config) => {
   test(text, t => {
-    const deprecations = deprikat.analyze(fileName, config);
-    const report = reporter.report(
+    const deprecations = analyze(fileName, config);
+    const report = reporter(
       fileName, deprecations.deprecatedFunctionsNames, config
     );
 
@@ -51,8 +51,8 @@ basicTest(
 
 test('should detect no deprecated functions', t => {
   const fileName = './tests/fixtures/code-no-deprecations.js';
-  const deprecations = deprikat.analyze(fileName);
-  const report = reporter.report(
+  const deprecations = analyze(fileName);
+  const report = reporter(
     fileName, deprecations.deprecatedFunctionsNames
   );
 
@@ -63,13 +63,11 @@ test('should detect no deprecated functions', t => {
   t.end();
 });
 
-
-
-test('foo', t => {
-  const deprecations = deprikat.analyze(
+test('should be able to relate multiple files', t => {
+  const deprecations = analyze(
     './tests/fixtures/code-definition.js'
   );
-  const report = reporter.report(
+  const report = reporter(
     './tests/fixtures/code-usage.js',
     deprecations.deprecatedFunctionsNames
   );

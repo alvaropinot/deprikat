@@ -13,7 +13,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "testold": "tape tests/**/*.test.js",
+    "tape": "tape tests/**/*.test.js | tap-spec",
     "test": "istanbul cover tests/index.js | tap-spec",
     "watch": "nodemon -q -x 'npm test'"
   },
