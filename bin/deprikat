@@ -1,0 +1,46 @@
+'use strict';
+
+let args = process.argv;
+
+if (!args || args.length < 3) {
+	console.log('Path parameter is missing');
+	return;
+}
+
+const deprikat = require('./');
+const fs = require('fs');
+
+function scanFile(file) {
+	deprikat.analyze(file, {});
+}
+
+function scan(path){
+
+	let stats = fs.statSync(path);
+
+	if (stats.isFile()) {
+		scanFile(path);
+	}
+	else if (stats.isDirectory()){
+	 	let files = fs.readdirSync(path);
+
+		if (files.length) {
+			files.forEach(function (file){
+				let filename = path + '/' + file;
+				console.log('Analyzing file:' + filename);
+				scan(filename);
+			});
+		}
+	}
+}
+
+
+let fileName = args[2];
+scan(fileName);
+
+
+
+
+
+
+
