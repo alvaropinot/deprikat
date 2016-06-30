@@ -15,7 +15,7 @@ program
   //start
   program.parse(process.argv);
 
-function scanCommand(dir) {
+function scanCommand (dir) {
   scan(dir.length ? dir[0] : './'); //default to current folder
 }
 
