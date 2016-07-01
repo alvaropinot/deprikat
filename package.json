@@ -16,7 +16,7 @@
     "tape": "tape tests/**/*.test.js | tap-spec",
     "test": "npm run lint && istanbul cover tests/index.js | tap-spec",
     "watch": "nodemon -q -x 'npm test'",
-    "lint": "eslint index.js lib/**/*.js tests/**/*.test.js --format './node_modules/eslint-friendly-formatter/index.js'"
+    "lint": "eslint **/*.js --format './node_modules/eslint-friendly-formatter/index.js'"
   },
   "author": "Alvaro Pinot",
   "license": "MIT",
