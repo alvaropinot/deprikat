@@ -3,31 +3,35 @@
 const program = require('commander');
 const fs = require('fs');
 const analyze = require('../lib/analyze');
+const config = require('../package.json');
 
+/**
+ * Client
+ */
 function cli () {
+  program
+    .version(config.version)
+    .usage('[options] <dir>')
+    .option('-s, --scan <file>', 'Directory or file', scanCommand);
 
-program
-  .version('0.0.1')
-  .usage('[options] <dir>')
-  .option('-s, --scan <file>', 'Directory or file', scanCommand);
-
-
-  //start
+  // start
   program.parse(process.argv);
 
-function scanCommand (dir) {
-  scan(dir.length ? dir[0] : './'); //default to current folder
-}
+  /**
+   * scanCommand callback
+   * @param  {string} dir directory to read in
+   */
+  function scanCommand (dir) {
+    scan(dir.length ? dir[0] : './'); // default to current folder
+  }
 
-  //
   /**
    * Analyze and process a file
-   * @param  {string}    filename
-   * @return {void}      stdout
+   * @param  {string} file path to file
    */
   function scanFile (file) {
     let deprecateds = analyze(file, {});
-  	stdOut(deprecateds);
+    stdOut(deprecateds);
   }
 
   /**
@@ -36,7 +40,7 @@ function scanCommand (dir) {
    * @return {void}     print out results
    */
   function stdOut (out) {
-    console.log(out);
+    return console.log(out);
   }
 
   /**
@@ -44,25 +48,24 @@ function scanCommand (dir) {
    * @param  {string} path The full path to a file or folder
    * @return {void}      stdout
    */
-  function scan (path){
-  	let stats = fs.statSync(path);
+  function scan (path) {
+    let stats = fs.statSync(path);
 
-  	if (stats.isFile()) {
-  		console.log('Analyzing file: ' + path.replace('//', '/'));
-  		scanFile(path);
-  	}
-  	else if (stats.isDirectory()){
-  		console.log('=== ' + path + ' >>>');
-  	 	let files = fs.readdirSync(path);
+    if (stats.isFile()) {
+      console.log('Analyzing file: ' + path.replace('//', '/'));
+      scanFile(path);
+    } else if (stats.isDirectory()) {
+      console.log('=== ' + path + ' >>>');
+      let files = fs.readdirSync(path);
 
-  		if (files.length) {
-  			files.forEach(function (file){
-  				let filename = path + '/' + file;
-  				scan(filename);
-  			});
-  			console.log('<<< ' + path + ' ===');
-  		}
-  	}
+      if (files.length) {
+        files.forEach(function (file) {
+          let filename = path + '/' + file;
+          scan(filename);
+        });
+        console.log('<<< ' + path + ' ===');
+      }
+    }
   }
 }
 
