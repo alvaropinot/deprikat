@@ -42,7 +42,17 @@ function cli () {
    * @return {object} console.log output
    */
   function stdOut (out) {
-    return out.forEach((x, index) => console.log((index + 1) + '- ' + x));
+    return out.forEach(sendMsg);
+  }
+  /**
+   * send message to stdOut
+   * @param  {string} funName     deprecated function found
+   * @param  {number} index       Current index
+   * @param  {object} deprecateds Array
+   */
+  function sendMsg (funName, index, deprecateds) {
+    let msg = ' ' + (index + 1) + '- ' + funName;
+    console.log(msg);
   }
 
   /**
