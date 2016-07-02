@@ -53,17 +53,15 @@ function cli () {
     if (stats.isFile()) {
       console.log('Analyzing file: ' + path.replace('//', '/'));
       scanFile(path);
-    } else if (stats.isDirectory()) {
+    } else {
       console.log('=== ' + path + ' >>>');
       let files = fs.readdirSync(path);
 
-      if (files.length) {
-        files.forEach(function (file) {
-          let filename = path + '/' + file;
-          scan(filename);
-        });
-        console.log('<<< ' + path + ' ===');
-      }
+      files.forEach(file => {
+        let filename = path + '/' + file;
+        scan(filename);
+      });
+      console.log('<<< ' + path + ' ===');
     }
   }
 }
