@@ -40,7 +40,7 @@ function cli () {
    * @return {object} console.log output
    */
   function stdOut (out) {
-    return console.log(out);
+    return out.forEach((x, index) => console.log((index + 1) + '- ' + x));
   }
 
   /**
