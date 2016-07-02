@@ -22,7 +22,7 @@ function cli () {
    * @param  {string} dir directory to read in
    */
   function scanCommand (dir) {
-    scan(dir.length ? dir[0] : './'); // default to current folder
+    scan(dir); // default to current folder
   }
 
   /**
