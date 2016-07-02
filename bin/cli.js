@@ -30,7 +30,7 @@ function cli () {
    * @param  {string} file path to file
    */
   function scanFile (file) {
-    let deprecateds = analyze(file, {});
+    let deprecateds = analyze(file, {}).deprecatedFunctionsNames;
     stdOut(deprecateds);
   }
 
