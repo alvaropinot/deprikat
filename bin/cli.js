@@ -36,8 +36,8 @@ function cli () {
 
   /**
    * Print result to stdout
-   * @param  {object} out The return from analyzer()
-   * @return {void}     print out results
+   * @param  {object} out Array return from analyzer()
+   * @return {object} console.log output
    */
   function stdOut (out) {
     return console.log(out);
@@ -46,7 +46,6 @@ function cli () {
   /**
    * Scan a file or folder
    * @param  {string} path The full path to a file or folder
-   * @return {void}      stdout
    */
   function scan (path) {
     let stats = fs.statSync(path);
