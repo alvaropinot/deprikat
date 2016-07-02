@@ -30,8 +30,10 @@ function cli () {
    * @param  {string} file path to file
    */
   function scanFile (file) {
+    console.log('Analyzing file: ' + file);
     let deprecateds = analyze(file, {}).deprecatedFunctionsNames;
     stdOut(deprecateds);
+    console.log('');
   }
 
   /**
@@ -51,7 +53,6 @@ function cli () {
     let stats = fs.statSync(path);
 
     if (stats.isFile()) {
-      console.log('Analyzing file: ' + path.replace('//', '/'));
       scanFile(path);
     } else {
       console.log('=== ' + path + ' >>>');
