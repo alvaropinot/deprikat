@@ -1,6 +1,6 @@
 {
   "name": "deprikat",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "deprecation tags analyser with usage lookup",
   "keywords": [
     "deprecation",
